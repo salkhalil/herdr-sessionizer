@@ -32,6 +32,16 @@
 
 set -euo pipefail
 
+# Ensure Homebrew binaries are in PATH (needed when running as herdr plugin)
+if [[ -d "/opt/homebrew/bin" ]] && [[ ":$PATH:" != *":/opt/homebrew/bin:"* ]]; then
+  export PATH="/opt/homebrew/bin:$PATH"
+fi
+
+# Also support Intel Macs
+if [[ -d "/usr/local/bin" ]] && [[ ":$PATH:" != *":/usr/local/bin:"* ]]; then
+  export PATH="/usr/local/bin:$PATH"
+fi
+
 HERDR="${HERDR_BIN_PATH:-herdr}"
 
 # In a plugin pane, stderr vanishes when the pane closes on exit — hold it
