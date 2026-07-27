@@ -32,15 +32,13 @@
 
 set -euo pipefail
 
-# Ensure Homebrew binaries are in PATH (needed when running as herdr plugin)
-if [[ -d "/opt/homebrew/bin" ]] && [[ ":$PATH:" != *":/opt/homebrew/bin:"* ]]; then
-  export PATH="/opt/homebrew/bin:$PATH"
-fi
-
-# Also support Intel Macs
-if [[ -d "/usr/local/bin" ]] && [[ ":$PATH:" != *":/usr/local/bin:"* ]]; then
-  export PATH="/usr/local/bin:$PATH"
-fi
+# Ensure Homebrew binaries are in PATH (needed when running as herdr plugin).
+# /opt/homebrew/bin is Apple Silicon, /usr/local/bin is Intel.
+for dir in /opt/homebrew/bin /usr/local/bin; do
+  if [[ -d "$dir" && ":$PATH:" != *":$dir:"* ]]; then
+    export PATH="$dir:$PATH"
+  fi
+done
 
 HERDR="${HERDR_BIN_PATH:-herdr}"
 
