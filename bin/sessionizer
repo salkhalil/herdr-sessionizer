@@ -32,8 +32,7 @@
 
 set -euo pipefail
 
-# Ensure Homebrew binaries are in PATH (needed when running as herdr plugin).
-# /opt/homebrew/bin is Apple Silicon, /usr/local/bin is Intel.
+# Check homebrew and usr local binaries for fzf
 for dir in /opt/homebrew/bin /usr/local/bin; do
   if [[ -d "$dir" && ":$PATH:" != *":$dir:"* ]]; then
     export PATH="$dir:$PATH"
